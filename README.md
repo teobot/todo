@@ -1,4 +1,4 @@
-# todo
+# todo-backend
 > Todo tracking app, tracking what I've done in a day
 
 ## Requirements
