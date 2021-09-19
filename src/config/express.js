@@ -7,7 +7,7 @@ const allowCrossOriginRequests = (req, res, next) => {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
     "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, X-Authorization"
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
   );
   res.header(
     "Access-Control-Allow-Methods",
@@ -33,7 +33,8 @@ module.exports = function () {
   });
 
   // Require all new routes here
-  require("../routes/test.route")(app);
+  require("../routes/todo.route")(app);
+  require("../routes/auth.route")(app);
 
   return app;
 };

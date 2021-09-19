@@ -5,7 +5,7 @@ const dotenv = require("dotenv").config();
 let config = convict({
   jwt_secret: {
     format: String,
-    default: "The secret used to sign the JWT",
+    default: process.env.JWT_SECRET,
   },
   version: {
     format: String,

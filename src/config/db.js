@@ -1,5 +1,5 @@
 // model imports
-require("../models/test.model")
+require("../models/User.server.model")
 
 // Require mongoose
 const mongoose = require("mongoose");

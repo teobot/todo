@@ -1,5 +1,21 @@
-# Documentation
-## Adding a new route
+# Todo
+- [Todo](#todo)
+  - [Requirements](#requirements)
+  - [Designs](#designs)
+  - [Documentation](#documentation)
+    - [Adding a new route](#adding-a-new-route)
+    - [Creating a new mongoose schema](#creating-a-new-mongoose-schema)
+      - [Adding new value to model](#adding-new-value-to-model)
+## Requirements
+1. I want to be able to create/edit/delete todo notes
+2. I want to be able to view what I've done each day
+3. I want to be able to mark todo items as incomplete/complete
+4. I want a list of what I've done the previous day so I can message it in chat
+  
+## Designs
+
+## Documentation
+### Adding a new route
 1. Create the routes file using the boilerplate code below in the folder `./src/routes`.
 ```javascript
 const config = require("../config/config");
@@ -36,7 +52,7 @@ module.exports = {
 ```javascript
 require("../routes/ROUTE_FILE")(app);
 ```
-## Creating a new mongoose schema
+### Creating a new mongoose schema
 1. Make the new model using the code below and save it inside `./src/models/` using convention `name.model.js`,
 ```javascript
 const mongoose = require("mongoose");
@@ -47,6 +63,6 @@ mongoose.model(`MODEL_NAME`, SCHEMA_NAME);
 ```
 2. Add the import inside `./src/config/db.js` at the top of the page, using the code `require("../models/name.model")`
 
-### Adding new value to model
+#### Adding new value to model
 1. Add the key and value to the model located inside `./src/models/`,
 2. Go to `./src/controllers/database.controller.js` and add the new value to be saved to the database inside `saveReviewToDatabase`,
