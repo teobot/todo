@@ -1,4 +1,7 @@
 # Todo
+
+api link : https://teobot-todo-api.herokuapp.com/api/v1
+
 - [Todo](#todo)
   - [Requirements](#requirements)
   - [Designs](#designs)
@@ -6,11 +9,23 @@
     - [Adding a new route](#adding-a-new-route)
     - [Creating a new mongoose schema](#creating-a-new-mongoose-schema)
       - [Adding new value to model](#adding-new-value-to-model)
+
+
 ## Requirements
-1. I want to be able to create/edit/delete todo notes
-2. I want to be able to view what I've done each day
-3. I want to be able to mark todo items as incomplete/complete
-4. I want a list of what I've done the previous day so I can message it in chat
+1. [x] I want to be able to create/edit/delete todo notes
+   1. [x] Create Todos
+   2. [x] Edit Todos
+   3. [x] Delete Todos
+2. [ ] I want to be able to view what I've done each day
+3. [x] I want to be able to mark todo items as incomplete/complete
+   1. [x] mark as complete
+   2. [x] mark as incomplete
+4. [ ] I want to be able to see what I've done and not done in a day
+5. [ ] I want to be able to move items that I didn't do in the day before to the current day
+6. [ ] I want to be able to auto generate what I've done the previous day
+7. [x] I want to be able to create lists and add items to specific lists
+   1. [x] Create lists
+   2. [x] Create todos in lists
   
 ## Designs
 

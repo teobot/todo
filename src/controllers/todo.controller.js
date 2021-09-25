@@ -10,35 +10,104 @@ var jwt = require("jsonwebtoken");
 // Check if dates are on the same day
 const { datesAreOnSameDay } = require("../functions/general.functions");
 
+const deleteList = async (req, res) => {
+  try {
+    const user = req.user;
+
+    const { listId } = req.body;
+
+    //if listid doesnt exist
+    if (!listId) {
+      return res.status(400).send({
+        success: false,
+        message: "List id is required",
+      });
+    }
+
+    let listToDelete = user.todos.find((item) => item.id === listId);
+
+    if (listToDelete) {
+      user.todos.splice(user.todos.indexOf(listToDelete), 1);
+    }
+
+    await user.save();
+
+    return res.send({ success: true, data: user });
+  } catch (error) {
+    return res.send({ success: false });
+  }
+};
+
+const createList = async (req, res) => {
+  // this method creates a new list
+  const user = req.user;
+
+  const { listTitle } = req.body;
+
+  if (!listTitle) {
+    return res.status(400).send({
+      success: false,
+      message: "Please provide a list title",
+    });
+  }
+
+  try {
+    user.todos.push({ title: listTitle, date: new Date(), items: [] });
+
+    await user.save();
+
+    return res.send({
+      success: true,
+      data: user,
+    });
+  } catch (error) {
+    return res.send({
+      success: false,
+    });
+  }
+};
+
 const createTodo = async (req, res) => {
   const user = req.user;
 
-  const todoText = req.body.text;
+  const { todoText, listId } = req.body;
 
   let newDate = new Date();
 
-  // add a day
-  //date.setDate(date.getDate() - 16);
-
-  const todayTodo = user.todos.find((todo) =>
-    datesAreOnSameDay(new Date(todo.date), newDate)
-  );
-
-  if (!todayTodo) {
-    user.todos.push({ date: newDate, items: [] });
+  if (!todoText) {
+    return res.status(400).send({
+      success: false,
+      message: "Please provide a todo text",
+    });
   }
 
-  user.todos
-    .find((todo) => datesAreOnSameDay(new Date(todo.date), newDate))
-    .items.unshift({ text: todoText });
+  if (!listId) {
+    return res.status(400).send({
+      success: false,
+      message: "Please provide a list id",
+    });
+  }
 
-  await user.save();
+  if (listId) {
+    // : if the listId is a variable the user wants to add a todo to a list
 
-  return res.send({
-    _id: user._id,
-    username: user.username,
-    todos: user.todos,
-  });
+    let todoList = user.todos.find((item) => item.id === listId);
+
+    if (todoList) {
+      todoList.items.push({
+        id: new Date().getTime(),
+        text: todoText,
+        date: newDate,
+        completed: false,
+      });
+    }
+
+    await user.save();
+
+    return res.send({ success: true, data: user });
+  } else {
+    return res.status(400).send({ success: false });
+  }
 };
 
 const getTodos = (req, res) => {
@@ -67,7 +136,7 @@ const markAsComplete = async (req, res) => {
 
     await user.save();
 
-    return res.send({ success: true, val: todoItemComplete.completed });
+    return res.send({ success: true, data: user });
   } catch (exception) {
     return res.send({ success: false });
   }
@@ -97,7 +166,7 @@ const deleteTodo = async (req, res) => {
 
     await user.save();
 
-    return res.send({ success: true, val: todoItemToDelete });
+    return res.send({ success: true, data: user });
   } catch (exception) {
     return res.send({ success: false });
   }
@@ -118,7 +187,7 @@ const editTodo = async (req, res) => {
 
     await user.save();
 
-    return res.send({ success: true, todoItem });
+    return res.send({ success: true, data: user });
   } catch (exception) {
     return res.send({ success: false });
   }
@@ -127,8 +196,10 @@ const editTodo = async (req, res) => {
 // export all functions
 module.exports = {
   createTodo,
+  createList,
   getTodos,
   markAsComplete,
   deleteTodo,
   editTodo,
+  deleteList,
 };

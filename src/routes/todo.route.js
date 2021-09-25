@@ -7,6 +7,9 @@ const controller = require("../controllers/todo.controller");
 const requireAuth = require("../middlewares/requireAuth")
 
 module.exports = function (app) {
+  // create a list
+  app.route("/api/" + version + "/list/create").post(requireAuth, controller.createList);
+  
   // create a todo item
   app.route("/api/" + version + "/todo/create").post(requireAuth, controller.createTodo);
 
@@ -21,5 +24,8 @@ module.exports = function (app) {
 
   // edit a todo text
   app.route("/api/" + version + "/todo/edit").patch(requireAuth, controller.editTodo);
+
+  // delete a list
+  app.route("/api/" + version + "/list/delete").delete(requireAuth, controller.deleteList);
 
 };

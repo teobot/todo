@@ -19,10 +19,8 @@ const TodoItem = new mongoose.Schema({
 });
 
 const TodoSchema = new mongoose.Schema({
-  date: {
-    unique: true,
-    type: Date,
-  },
+  title: String,
+  date: Date,
   items: [TodoItem],
 });
 
